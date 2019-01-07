@@ -1,8 +1,6 @@
 package pl.andrzejd.shamirschema;
 
-import java.math.BigInteger;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
@@ -53,15 +51,15 @@ public class ShamirStrategy {
     public float revealSecret(List<List<Integer>> list) {
         float sum = 0;
 
-        for (List<Integer> aList : list) {
+        for (List<Integer> aList : list.subList(0, t)) {
             Fraction<Integer, Integer> fraction = functionL(
                     aList.get(0),
-                    list.stream()
+                    list.subList(0, t)
+                            .stream()
                             .map(i -> i.get(0))
                             .collect(Collectors.toList())
             );
 
-            System.out.println(fraction.up + " " + fraction.down);
             sum += (((float) (fraction.up / fraction.down)) * aList.get(1)) % p;
         }
 
