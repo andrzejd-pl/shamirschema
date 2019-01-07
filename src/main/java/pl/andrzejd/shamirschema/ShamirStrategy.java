@@ -41,8 +41,8 @@ public class ShamirStrategy {
     public int getShare(int i) {
         int sum = secretNumber;
 
-        for (Integer module : modules) {
-            sum += module * i;
+        for (int j = 0; j < modules.size(); j++) {
+            sum += modules.get(j) * Math.pow(i, j + 1);
         }
 
         return sum % p;
