@@ -5,8 +5,19 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 public class ShamirStrategy {
+
+    private class Fraction<T, N> {
+        public T up;
+        public N down;
+
+        public Fraction(T up, N down) {
+            this.up = up;
+            this.down = down;
+        }
+    }
 
     private int secretNumber;
 
@@ -42,20 +53,33 @@ public class ShamirStrategy {
     public float revealSecret(List<List<Integer>> list) {
         float sum = 0;
 
-        for (int b= 0; b < list.size(); b++) {
-            float down = 1, up = 1;
-            for (int i = 0; i < t; i++) {
-                int j = (i == 0) ? 1 : 0;
-                up *= (-1) * list.get(i).get(0);
-                down *= list.get(j).get(0) - list.get(i).get(0);
-                System.out.println(up + " " + down);
-            }
+        for (List<Integer> aList : list) {
+            Fraction<Integer, Integer> fraction = functionL(
+                    aList.get(0),
+                    list.stream()
+                            .map(i -> i.get(0))
+                            .collect(Collectors.toList())
+            );
 
-            System.out.println(((up/down) * list.get(b).get(1)) % p);
-
-            sum += ((up/down) * list.get(b).get(1)) % p;
+            System.out.println(fraction.up + " " + fraction.down);
+            sum += (((float) (fraction.up / fraction.down)) * aList.get(1)) % p;
         }
 
         return sum;
+    }
+
+    public Fraction<Integer, Integer> functionL(int xI, List<Integer> x) {
+        int up = 1, down = 1;
+
+        for (Integer xJ : x) {
+            if (xJ == xI) {
+                continue;
+            }
+
+            down *= (xI - xJ);
+            up *= (-1) * xJ;
+        }
+
+        return new Fraction<>(up, down);
     }
 }
