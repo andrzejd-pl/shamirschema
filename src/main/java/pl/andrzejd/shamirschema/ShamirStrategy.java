@@ -27,15 +27,14 @@ public class ShamirStrategy {
     public ShamirStrategy(int secretNumber, int t) {
         this.secretNumber = secretNumber;
         Random random = new Random();
-        p = 1523;
-//        p = random.nextInt();
+        p = random.nextInt();
         this.t = t;
 
-        modules = new ArrayList<>(Arrays.asList(352, 62));
+        modules = new ArrayList<>();
 
-//        for(int i = 0; i < t - 1; i++) {
-//            modules.add(random.nextInt());
-//        }
+        for (int i = 0; i < t - 1; i++) {
+            modules.add(Math.abs(random.nextInt()) % 100);
+        }
     }
 
     public int getShare(int i) {
