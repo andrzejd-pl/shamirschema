@@ -68,7 +68,7 @@ public class ShamirStrategy {
         return sum;
     }
 
-    public Fraction<Integer, Integer> functionL(int xI, List<Integer> x) {
+    private Fraction<Integer, Integer> functionL(int xI, List<Integer> x) {
         int up = 1, down = 1;
 
         for (Integer xJ : x) {
